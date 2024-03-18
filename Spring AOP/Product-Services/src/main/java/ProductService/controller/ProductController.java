@@ -1,6 +1,7 @@
 package ProductService.controller;
 
 import ProductService.Exception.ProductNotFoundException;
+import ProductService.aop.LogRequestResponse;
 import ProductService.model.Product;
 import ProductService.service.IProductService;
 import ProductService.service.ProductService;
@@ -17,22 +18,22 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    @Qualifier("demoProductService")
+    //@Qualifier("demoProductService")
     IProductService prod;
-
+    @LogRequestResponse
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts()
     {
         List<Product> productlist =prod.getAllProducts();
         return ResponseEntity.accepted().body(productlist);
     }
-
+    @LogRequestResponse
     @GetMapping("/products/{id}")
     public ResponseEntity<?> getProductById(@PathVariable int id) throws ProductNotFoundException {
      Product product=prod.getProductById(id);
      return ResponseEntity.accepted().body(product);
     }
-
+    @LogRequestResponse
     @PostMapping("/products")
     public ResponseEntity<Product> addProduct(@RequestBody  Product newProduct)
     {

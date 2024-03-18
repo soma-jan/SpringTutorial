@@ -1,6 +1,7 @@
 package ProductService.service;
 
 import ProductService.Exception.ProductNotFoundException;
+import ProductService.aop.LogExecutionTime;
 import ProductService.model.Product;
 import ProductService.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,28 +10,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-//@Primary
+@Primary
 public class ProductService implements IProductService {
     @Autowired
     ProductRepo productrepo;
-
+    @LogExecutionTime
     public List<Product> getAllProducts()
     {
         return productrepo.findAll();
     }
-
+    @LogExecutionTime
     public Product getProductById(int id ) throws ProductNotFoundException
     {
         return productrepo.findById(id).orElseThrow(()->new ProductNotFoundException("Product","id",id));
 
     }
-
+    @LogExecutionTime
     public boolean delete(int id) throws ProductNotFoundException {
         Product product=productrepo.findById(id).orElseThrow(()->new ProductNotFoundException("Product","id",id));
         productrepo.delete(product);
         return true;
     }
-
+    @LogExecutionTime
     public Product updateProduct( Product upProduct,int id) throws ProductNotFoundException {
         Product product=productrepo.findById(id).orElseThrow(()->new ProductNotFoundException("Product","id",id));
         product.setCategory(upProduct.getCategory());
@@ -46,6 +47,7 @@ public class ProductService implements IProductService {
         return productrepo.save(product);
 
     }
+    @LogExecutionTime
     public Product addProduct(Product  newProduct)
     {
 
