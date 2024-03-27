@@ -21,9 +21,9 @@ public class ReleaseNote {
     private String changeLogData;
 
     public ReleaseNote(String version, LocalDateTime date, String changeLogData) {
-        this.version=version;
-        this.date=date;
-        this.changeLogData=changeLogData;
+        this.version = version;
+        this.date = date;
+        this.changeLogData = changeLogData;
 
     }
 }

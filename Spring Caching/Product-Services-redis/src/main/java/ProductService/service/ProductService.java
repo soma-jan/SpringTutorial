@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 @Service
 @Primary
@@ -39,7 +40,7 @@ public class ProductService implements IProductService {
         return true;
     }
     @LogExecutionTime
-    @CacheEvict(value = "products", allEntries = true )
+   // @CacheEvict(value = "products", allEntries = true )
     @CachePut(value = "products", key = "#id")
     public Product updateProduct( Product upProduct,int id) throws ProductNotFoundException {
         Product product=productrepo.findById(id).orElseThrow(()->new ProductNotFoundException("Product","id",id));
